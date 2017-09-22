@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
+  <script src="game.js" charset="utf-8"></script>
+  <script src="ship.js" charset="utf-8"></script>
+  <script src="bullet.js" charset="utf-8"></script>
+  <script src="rectangle/rect.js" charset="utf-8"></script>
+  <title>Space invaders</title>
 </head>
-<body>
-  first commit  
+<body onload="game.setup();">
+  <div class="wrapper">
+    <nav>
+
+    </nav>
+    <div class="gameplace">
+      <div id="game"></div>
+    </div>
+  </div>
 </body>
 </html>
