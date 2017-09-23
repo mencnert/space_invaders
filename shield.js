@@ -6,15 +6,15 @@ function shield(x, y) {
 
   this.setup = function() {
     this.rects = [];
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 3; i++) {
       for (var j = 0; j < 5; j++) {
         this.rects.push(new rect(this.x + j * this.size, this.y + i * this.size,
           this.size, this.size));
       }
     }
-    this.rects.push(new rect(this.x, this.y + 2 * this.size,
+    this.rects.push(new rect(this.x, this.y + 3 * this.size,
       this.size, this.size));
-    this.rects.push(new rect(this.x + 4 * this.size, this.y + 2 * this.size,
+    this.rects.push(new rect(this.x + 4 * this.size, this.y + 3 * this.size,
       this.size, this.size));
   }
 

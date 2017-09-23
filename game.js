@@ -25,7 +25,9 @@ var game = {
     //alien
     for (var i = 0; i < 5; i++) {
       for (var j = 0; j < 11; j++) {
-        this.aliens.push(new alien(100 + j * 50, 50 + this.level * 30 + i * 40, 100 - i * 5));
+        this.aliens.push(new alien(50 + j * 65,
+          this.level * 50 + i * 50,
+          100 - i * 5));
       }
     }
     //canvas setup
@@ -47,18 +49,27 @@ var game = {
   },
 
   update: function() {
+    //alien
     var collision = false;
     this.ship.update();
-    this.aliens.forEach(function(alien) {
-      collision = (alien.update()) ? true : collision;
-    }); //end forEach
+    var len = this.aliens.length;
+
+    for (var i = 0; i < len; i++) {
+      collision = (this.aliens[i].update()) ? true : collision;
+    }
+
+    for (var i = 0; i < len; i++) {
+      if (game.ship.bullet != null) {
+        this.aliens[i].collision(this.ship.bullet.rect, i);
+      }
+    }
 
     if (collision) {
       this.aliens.forEach(function(alien) {
         alien.changeDir();
       }); //end forEach
     }
-
+    // alien end
     this.shields.forEach(function(shield) {
       if (game.ship.bullet != null) {
         shield.collision(game.ship.bullet.rect);

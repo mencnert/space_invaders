@@ -20,7 +20,7 @@ function alien(x, y, wait) {
         var y = this.y
         game.aliens.forEach(function(alien) {
           if (alien.y == y) {
-            alien.x -= alien.alienSpeed*2;
+            alien.x -= alien.alienSpeed*2 ;
             alien.rect.setPosition(alien.x, alien.y);
           }
         }); //end forEach
@@ -40,4 +40,11 @@ function alien(x, y, wait) {
     this.rect.setPosition(this.x, this.y);
     this.alienSpeed *= -1;
   }
+
+  this.collision = function(bulletRect, index) {
+    if (this.rect.intersect(bulletRect)) {
+      game.aliens.splice(index, 1);
+      game.ship.bullet = null;
+  }
+}
 }
