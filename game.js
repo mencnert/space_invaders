@@ -2,9 +2,18 @@ var game = {
   canvas: document.createElement('canvas'),
   ctx: null,
   ship: null,
-  bullet: null,
+  shields: [],
+
   setup: function() {
-    this.ship = new ship(400, 520);
+    this.ship = new ship(375, 520);
+    //shield setup
+    this.shields.push(new shield(100, 450));
+    this.shields.push(new shield(275, 450));
+    this.shields.push(new shield(450, 450));
+    this.shields.push(new shield(625, 450));
+    this.shields.forEach(function(shield) {
+      shield.setup();
+    }); //end forEach
     this.canvas.width = 800;
     this.canvas.height = 600;
     this.canvas.style.backgroundColor = "black";
@@ -12,14 +21,27 @@ var game = {
     document.getElementById('game').appendChild(this.canvas);
     setInterval(this.run, 20);
   },
+
   run: function() {
-    game.ship.update();
-    game.clearMap();
-    game.ship.draw();
+    game.update();
+    game.draw();
   },
+
   clearMap: function() {
     this.ctx.clearRect(0, 0, 800, 600)
-  }
+  },
+
+  update: function() {
+    this.ship.update();
+  },
+
+  draw: function() {
+    this.clearMap();
+    this.ship.draw();
+    this.shields.forEach(function(shield) {
+      shield.draw();
+    }); //end forEach
+  },
 }
 
 $(document).keyup(function(e) {

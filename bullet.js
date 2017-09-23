@@ -1,7 +1,7 @@
 function bullet(x, y) {
   this.x = x;
   this.y = y;
-  this.w =2;
+  this.w = 2;
   this.h = 5;
   this.speed = 15;
   this.rect = new rect(this.x, this.y, this.w, this.h);

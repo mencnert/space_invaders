@@ -30,7 +30,7 @@ function ship(x, y) {
 
   this.fire = function() {
     if (this.bullet == null) {
-      this.bullet = new bullet(this.x + 2.5 * this.size, this.y);
+      this.bullet = new bullet(this.x + 2.5 * this.size, this.rectHead.y);
     }
   }
 
