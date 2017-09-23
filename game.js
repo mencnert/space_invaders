@@ -14,6 +14,7 @@ var game = {
     this.shields.forEach(function(shield) {
       shield.setup();
     }); //end forEach
+    //canvas setup
     this.canvas.width = 800;
     this.canvas.height = 600;
     this.canvas.style.backgroundColor = "black";
@@ -33,6 +34,12 @@ var game = {
 
   update: function() {
     this.ship.update();
+
+    this.shields.forEach(function(shield) {
+      if (game.ship.bullet != null) {
+        shield.collision(game.ship.bullet.rect);
+      }
+    }); //end forEach
   },
 
   draw: function() {

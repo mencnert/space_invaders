@@ -25,4 +25,16 @@ function shield(x, y) {
       game.ctx.fillRect(rect.x, rect.y, size, size);
     });
   }
+
+  this.collision = function(bulletRect) {
+    var n = this.rects.length;
+    for (var i = 0; i < n; i++) {
+      if (this.rects[i].intersect(bulletRect)) {
+        this.rects.splice(i, 1);
+        game.ship.bullet = null;
+        break;
+      }
+    }
+
+  }
 }
