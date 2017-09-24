@@ -44,4 +44,16 @@ function ship(x, y) {
       this.bullet.draw();
     }
   }
+
+  this.collisionLight = function(light) {
+    if (this.rectHead.intersect(light.rect) || this.rectNeck.intersect(light.rect) || this.rectBody.intersect(light.rect)) {
+      game.lights.splice(game.lights.indexOf(light), 1);
+      this.bullet = null;
+      game.lives--;
+      game.gameOver = (game.lives == 0)
+      sleep(2000);
+      this.x = 375;
+      this.y = 520;
+    }
+  }
 }

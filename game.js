@@ -11,6 +11,13 @@ var game = {
   //img section
   light1: null,
   light2: null,
+  alien11: null,
+  alien12: null,
+  alien21: null,
+  alien22: null,
+  alien31: null,
+  alien32: null,
+  gameOver: false,
   setup: function() {
     this.ship = new ship(375, 520);
 
@@ -29,28 +36,61 @@ var game = {
     //alien
     for (var i = 0; i < 5; i++) {
       for (var j = 0; j < 11; j++) {
-        this.aliens.push(new alien(50 + j * 65,
-          this.level * 50 + i * 50,
-          100 - i * 5));
+        switch (i) {
+          //type 1
+          case 0:
+            this.aliens.push(new alien(60 + j * 65,
+              this.level * 50 + i * 50, 40,
+              100 - i * 5, 1));
+            break;
+            //type 2
+          case 1:
+          case 2:
+            this.aliens.push(new alien(55 + j * 65,
+              this.level * 50 + i * 50, 55,
+              100 - i * 5, 2));
+            break;
+            //type 3
+          default:
+            this.aliens.push(new alien(50 + j * 65,
+              this.level * 50 + i * 50, 60,
+              100 - i * 5, 3));
+            break;
+        }
       }
     }
 
     //img
     this.light1 = new Image();
     this.light2 = new Image();
+    this.alien11 = new Image();
+    this.alien12 = new Image();
+    this.alien21 = new Image();
+    this.alien22 = new Image();
+    this.alien31 = new Image();
+    this.alien32 = new Image();
     this.light1.src = "img/light1.png";
     this.light2.src = "img/light2.png";
+    this.alien11.src = "img/alien11.png";
+    this.alien12.src = "img/alien12.png";
+    this.alien21.src = "img/alien21.png";
+    this.alien22.src = "img/alien22.png";
+    this.alien31.src = "img/alien31.png";
+    this.alien32.src = "img/alien32.png";
     //canvas setup
     this.canvas.width = 800;
     this.canvas.height = 600;
     this.canvas.style.backgroundColor = "black";
     this.ctx = this.canvas.getContext('2d');
+    this.ctx.font = "30px Arial";
+    this.ctx.color = "white";
     document.getElementById('game').appendChild(this.canvas);
     setInterval(this.run, 20);
   },
 
   run: function() {
-    game.update();
+    if (!game.gameOver)
+      game.update();
     game.draw();
   },
 
@@ -74,6 +114,9 @@ var game = {
       if (this.ship.bullet != null) {
         this.aliens[i].collisionBullet(this.ship.bullet.rect, i);
       }
+      if (this.aliens[i].y > 480) {
+        this.gameOver = true;
+      }
     }
     len = this.aliens.length;
 
@@ -94,6 +137,7 @@ var game = {
 
     this.lights.forEach(function(light) {
       light.update();
+      game.ship.collisionLight(light);
     });
 
     this.lightsCollision();
@@ -120,6 +164,9 @@ var game = {
     this.lights.forEach(function(light) {
       light.draw();
     }); //end forEach
+    if (this.gameOver) {
+      this.ctx.fillText("Game over", 40, 50);
+    }
   },
 
   lightsCollision: function() {
@@ -154,3 +201,9 @@ $(document).keydown(function(e) {
       break;
   }
 });
+
+function sleep(miliseconds) {
+  var currentTime = new Date().getTime();
+
+  while (currentTime + miliseconds >= new Date().getTime()) {}
+}
