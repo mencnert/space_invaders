@@ -37,4 +37,15 @@ function shield(x, y) {
     }
 
   }
+
+  this.collisionLight = function(light) {
+    var n = this.rects.length;
+    for (var i = 0; i < n; i++) {
+      if (this.rects[i].intersect(light.rect)) {
+        this.rects.splice(i, 1);
+        game.lights.splice(game.lights.indexOf(light), 1);
+        break;
+      }
+    }
+  }
 }

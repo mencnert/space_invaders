@@ -1,14 +1,14 @@
 var alienWait = 55;
+
 function alien(x, y, wait) {
   this.x = x;
   this.y = y;
   this.size = 50;
   this.alienSpeed = 10;
-  //this.alienWait = 45;
   this.wait = wait;
   this.rect = new rect(this.x, this.y, this.size, this.size - 10);
 
-  this.update = function() {
+  this.update = function(x, maxY) {
 
     this.wait--;
     var collision = false;
@@ -25,6 +25,12 @@ function alien(x, y, wait) {
             alien.rect.setPosition(alien.x, alien.y);
           }
         }); //end forEach
+      }
+      game.aliens.forEach(function(alien) {
+        maxY = (alien.x >= x - 10 && alien.x <= x + 10 && maxY < alien.y) ? alien.y : maxY;
+      }); //end forEach
+      if (Math.floor(Math.random() * 10) == 0 && maxY == this.y) {
+        game.lights.push(new light(x + 20, maxY + 30));
       }
     }
     return collision;

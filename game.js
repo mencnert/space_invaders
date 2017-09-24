@@ -4,9 +4,13 @@ var game = {
   ship: null,
   shields: [],
   aliens: [],
+  lights: [],
   level: 1,
   leftEdge: null,
   rightEdge: null,
+  //img section
+  light1: null,
+  light2: null,
   setup: function() {
     this.ship = new ship(375, 520);
 
@@ -30,6 +34,12 @@ var game = {
           100 - i * 5));
       }
     }
+
+    //img
+    this.light1 = new Image();
+    this.light2 = new Image();
+    this.light1.src = "img/light1.png";
+    this.light2.src = "img/light2.png";
     //canvas setup
     this.canvas.width = 800;
     this.canvas.height = 600;
@@ -55,7 +65,9 @@ var game = {
     var len = this.aliens.length;
 
     for (var i = 0; i < len; i++) {
-      changeDir = (this.aliens[i].update()) ? true : changeDir;
+      var x = this.aliens[i].x;
+      var maxY = this.aliens[i].y;
+      changeDir = (this.aliens[i].update(x, maxY)) ? true : changeDir;
     }
 
     for (var i = 0; i < len; i++) {
@@ -80,11 +92,19 @@ var game = {
     }
     // alien end
 
+    this.lights.forEach(function(light) {
+      light.update();
+    });
+
+    this.lightsCollision();
     //shield-bullet
     this.shields.forEach(function(shield) {
       if (game.ship.bullet != null) {
         shield.collision(game.ship.bullet.rect);
       }
+      game.lights.forEach(function(light) {
+        shield.collisionLight(light);
+      });
     }); //end forEach
   },
 
@@ -97,6 +117,21 @@ var game = {
     this.aliens.forEach(function(alien) {
       alien.draw();
     }); //end forEach
+    this.lights.forEach(function(light) {
+      light.draw();
+    }); //end forEach
+  },
+
+  lightsCollision: function() {
+    var lightLen = this.lights.length;
+    for (var i = 0; i < lightLen; i++) {
+
+      if (this.lights[i].y > 600) {
+        this.lights.splice(i, 1);
+        lightLen--;
+      }
+    }
+
   },
 }
 
