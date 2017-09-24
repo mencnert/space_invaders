@@ -1,9 +1,10 @@
+var alienWait = 55;
 function alien(x, y, wait) {
   this.x = x;
   this.y = y;
   this.size = 50;
   this.alienSpeed = 10;
-  this.alienWait = 20;
+  //this.alienWait = 45;
   this.wait = wait;
   this.rect = new rect(this.x, this.y, this.size, this.size - 10);
 
@@ -14,7 +15,7 @@ function alien(x, y, wait) {
     if (this.wait === 0) {
       this.x += this.alienSpeed;
       this.rect.setPosition(this.x, this.y);
-      this.wait = this.alienWait;
+      this.wait = alienWait;
       if (this.rect.intersect(game.leftEdge) || this.rect.intersect(game.rightEdge)) {
         collision = true;
         var y = this.y
@@ -45,6 +46,7 @@ function alien(x, y, wait) {
     if (this.rect.intersect(rect)) {
       game.aliens.splice(index, 1);
       game.ship.bullet = null;
+      alienWait--;
     }
   }
 
