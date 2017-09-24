@@ -50,26 +50,37 @@ var game = {
 
   update: function() {
     //alien
-    var collision = false;
+    var changeDir = false;
     this.ship.update();
     var len = this.aliens.length;
 
     for (var i = 0; i < len; i++) {
-      collision = (this.aliens[i].update()) ? true : collision;
+      changeDir = (this.aliens[i].update()) ? true : changeDir;
     }
 
     for (var i = 0; i < len; i++) {
-      if (game.ship.bullet != null) {
-        this.aliens[i].collision(this.ship.bullet.rect, i);
+      if (this.ship.bullet != null) {
+        this.aliens[i].collisionBullet(this.ship.bullet.rect, i);
+      }
+    }
+    len = this.aliens.length;
+
+    for (var i = 0; i < len; i++) {
+      for (var j = 0; j < this.shields.length; j++) {
+        for (var k = 0; k < this.shields[j].rects.length; k++) {
+          this.aliens[i].collisionShield(this.shields[j].rects[k], j, k);
+        }
       }
     }
 
-    if (collision) {
+    if (changeDir) {
       this.aliens.forEach(function(alien) {
         alien.changeDir();
       }); //end forEach
     }
     // alien end
+
+    //shield-bullet
     this.shields.forEach(function(shield) {
       if (game.ship.bullet != null) {
         shield.collision(game.ship.bullet.rect);

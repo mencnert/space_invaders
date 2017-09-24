@@ -3,7 +3,7 @@ function alien(x, y, wait) {
   this.y = y;
   this.size = 50;
   this.alienSpeed = 10;
-  this.alienWait = 45;
+  this.alienWait = 20;
   this.wait = wait;
   this.rect = new rect(this.x, this.y, this.size, this.size - 10);
 
@@ -20,7 +20,7 @@ function alien(x, y, wait) {
         var y = this.y
         game.aliens.forEach(function(alien) {
           if (alien.y == y) {
-            alien.x -= alien.alienSpeed*2 ;
+            alien.x -= alien.alienSpeed * 2;
             alien.rect.setPosition(alien.x, alien.y);
           }
         }); //end forEach
@@ -41,10 +41,16 @@ function alien(x, y, wait) {
     this.alienSpeed *= -1;
   }
 
-  this.collision = function(bulletRect, index) {
-    if (this.rect.intersect(bulletRect)) {
+  this.collisionBullet = function(rect, index) {
+    if (this.rect.intersect(rect)) {
       game.aliens.splice(index, 1);
       game.ship.bullet = null;
+    }
   }
-}
+
+  this.collisionShield = function(rect, j, k) {
+    if (this.rect.intersect(rect)) {
+      game.shields[j].rects.splice(k, 1);
+    }
+  }
 }
