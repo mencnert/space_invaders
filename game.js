@@ -57,7 +57,6 @@ var game = {
   run: function() {
     if (!game.gameOver) {
       if (game.aliens.length == 0) {
-        console.log(this.aliens);
         game.level++;
         game.ship = new ship(375, 520);
         game.loadShield();
@@ -85,15 +84,12 @@ var game = {
       changeDir = (this.aliens[i].update(x, maxY)) ? true : changeDir;
     }
 
-    for (var i = 0; i < len; i++) {
-      if (alienWait != 0) {
-        if (this.ship.bullet != null) {
-          console.log(this.aliens[i]);
-          this.aliens[i].collisionBullet(this.ship.bullet.rect, i);
-        }
-        if (this.aliens[i].y > 480) {
-          this.gameOver = true;
-        }
+    for (var i = 0; i < this.aliens.length; i++) {
+      if (this.aliens[i].y > 480) {
+        this.gameOver = true;
+      }
+      if (this.ship.bullet != null) {
+        this.aliens[i].collisionBullet(this.ship.bullet.rect, i);
       }
     }
     len = this.aliens.length;
@@ -166,7 +162,6 @@ var game = {
   },
 
   loadAlien: function() {
-    this.aliens = [];
 
     alienWait = 55;
     for (var i = 0; i < 5; i++) {
@@ -230,6 +225,5 @@ $(document).keydown(function(e) {
 
 function sleep(miliseconds) {
   var currentTime = new Date().getTime();
-
   while (currentTime + miliseconds >= new Date().getTime()) {}
 }

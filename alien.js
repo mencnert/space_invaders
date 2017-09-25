@@ -85,7 +85,7 @@ function alien(x, y, w, wait, type) {
           break;
       }
       game.aliens.splice(index, 1);
-      //game.ship.bullet = null;
+      game.ship.bullet = null;
       alienWait--;
     }
   }
