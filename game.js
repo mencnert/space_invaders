@@ -2,6 +2,7 @@ var game = {
   canvas: document.createElement('canvas'),
   ctx: null,
   ship: null,
+  ufo: null,
   shields: [],
   aliens: [],
   lights: [],
@@ -12,6 +13,7 @@ var game = {
   lives: 3,
   score: 0,
   //img section
+  ufoImg: null,
   light1: null,
   light2: null,
   alien11: null,
@@ -21,7 +23,8 @@ var game = {
   alien31: null,
   alien32: null,
   setup: function() {
-    this.ship = new ship(375, 520);
+    this.ship = new ship(465, 520);
+    //this.ufo = new ufo();
     //edge setup
     this.leftEdge = new rect(-20, 0, 20, 600);
     this.rightEdge = new rect(800, 0, 20, 600);
@@ -29,6 +32,7 @@ var game = {
     this.loadAlien();
 
     //img
+    this.ufoImg = new Image();
     this.light1 = new Image();
     this.light2 = new Image();
     this.alien11 = new Image();
@@ -37,6 +41,7 @@ var game = {
     this.alien22 = new Image();
     this.alien31 = new Image();
     this.alien32 = new Image();
+    this.ufoImg.src = "img/ufo.png";
     this.light1.src = "img/light1.png";
     this.light2.src = "img/light2.png";
     this.alien11.src = "img/alien11.png";
@@ -57,7 +62,7 @@ var game = {
   run: function() {
     if (!game.gameOver) {
       if (game.aliens.length == 0) {
-        game.level++;
+        game.level = (game.level < 4) ? game.level + 1 : 4;
         game.ship = new ship(375, 520);
         game.loadShield();
         game.loadAlien();
@@ -108,6 +113,27 @@ var game = {
       }); //end forEach
     }
     // alien end
+    if (this.aliens.length != 0) {
+      if (this.aliens[0].y >= 100 && this.ufo == null) {
+        if (Math.floor(Math.random() * 5000) == 0) {
+          this.ufo = new ufo();
+        }
+      }
+    }
+
+    if (this.ufo != null) {
+      this.ufo.update();
+      if (this.ship.bullet != null) {
+        if (this.ship.bullet.rect.intersect(this.ufo.rect)) {
+          this.ufo = null;
+          this.ship.bullet = null;
+          this.score += 100;
+        }
+      }
+      if (this.ufo.x < -80) {
+        this.ufo = null;
+      }
+    }
 
     this.lights.forEach(function(light) {
       light.update();
@@ -129,6 +155,9 @@ var game = {
   draw: function() {
     this.clearMap();
     this.ship.draw();
+    if (this.ufo != null) {
+      this.ufo.draw();
+    }
     this.shields.forEach(function(shield) {
       shield.draw();
     }); //end forEach
@@ -164,6 +193,7 @@ var game = {
   loadAlien: function() {
 
     alienWait = 55;
+    this.ufo = null;
     for (var i = 0; i < 5; i++) {
       for (var j = 0; j < 11; j++) {
         switch (i) {
@@ -193,6 +223,7 @@ var game = {
 
   loadShield: function() {
     this.shields = [];
+    this.lights = [];
     this.shields.push(new shield(100, 450));
     this.shields.push(new shield(275, 450));
     this.shields.push(new shield(450, 450));
@@ -200,7 +231,12 @@ var game = {
     this.shields.forEach(function(shield) {
       shield.setup();
     }); //end forEach
-  }
+  },
+
+  sleep: function(miliseconds) {
+    var currentTime = new Date().getTime();
+    while (currentTime + miliseconds >= new Date().getTime()) {}
+  },
 }
 
 $(document).keyup(function(e) {
@@ -222,8 +258,3 @@ $(document).keydown(function(e) {
       break;
   }
 });
-
-function sleep(miliseconds) {
-  var currentTime = new Date().getTime();
-  while (currentTime + miliseconds >= new Date().getTime()) {}
-}

@@ -3,7 +3,7 @@ function light(x, y) {
   this.y = y;
   this.w = 12;
   this.h = 20;
-  this.speed = 4;
+  this.speed = 6;
   this.type = true;
   this.lightWait = 7;
   this.wait = this.lightWait;

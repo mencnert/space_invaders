@@ -49,10 +49,11 @@ function ship(x, y) {
     if (this.rectHead.intersect(light.rect) || this.rectNeck.intersect(light.rect) || this.rectBody.intersect(light.rect)) {
       game.lights.splice(game.lights.indexOf(light), 1);
       this.bullet = null;
+      game.lights = [];
       game.lives--;
       game.gameOver = (game.lives == 0)
       if (!game.gameOver) {
-        sleep(2000);
+        game.sleep(1500);
         this.x = 375;
         this.y = 520;
       }
