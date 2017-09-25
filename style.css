@@ -1,0 +1,51 @@
+/*reset*/
+
+html, body, nav, ul, li, i, canvas, div, p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+/*end reset*/
+
+body {
+  background-color: #272822;
+}
+
+canvas {
+  border: 1px solid white;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 75px 1fr;
+}
+
+nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 50px;
+  justify-self: center;
+}
+
+nav div a {
+  color: black;
+  font-size: 300%;
+}
+
+nav div a:hover {
+  color: white;
+}
+
+.gameplace {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 100vh;
+}
+
+#game {
+  display: grid;
+  justify-self: center;
+  align-self: center;
+}

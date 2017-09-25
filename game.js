@@ -10,6 +10,7 @@ var game = {
   leftEdge: null,
   rightEdge: null,
   gameOver: false,
+  start: false,
   lives: 3,
   score: 0,
   //img section
@@ -60,17 +61,22 @@ var game = {
   },
 
   run: function() {
-    if (!game.gameOver) {
-      if (game.aliens.length == 0) {
-        game.level = (game.level < 4) ? game.level + 1 : 4;
-        game.ship = new ship(465, 520);
-        game.loadShield();
-        game.loadAlien();
-      } else {
-        game.update();
+    if (game.start) {
+      if (!game.gameOver) {
+        if (game.aliens.length == 0) {
+          game.level = (game.level < 4) ? game.level + 1 : 4;
+          game.ship = new ship(465, 520);
+          game.loadShield();
+          game.loadAlien();
+        } else {
+          game.update();
+        }
       }
+      game.draw();
+    } else {
+      game.draw();
+      game.drawMenu();
     }
-    game.draw();
   },
 
   clearMap: function() {
@@ -115,7 +121,7 @@ var game = {
     // alien end
     if (this.aliens.length != 0) {
       if (this.aliens[0].y >= 100 && this.ufo == null) {
-        if (Math.floor(Math.random() * 5000) == 0) {
+        if (Math.floor(Math.random() * 3000) == 0) {
           this.ufo = new ufo();
         }
       }
@@ -125,7 +131,7 @@ var game = {
       this.ufo.update();
       if (this.ship.bullet != null) {
         if (this.ship.bullet.rect.intersect(this.ufo.rect)) {
-          this.ufo = null;
+          this.ufo.x = -100;
           this.ship.bullet = null;
           this.score += 100;
         }
@@ -179,6 +185,12 @@ var game = {
     }
   },
 
+  drawMenu: function() {
+    this.ctx.font = "50px Arial";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("Press enter to start", 180, 375);
+  },
+
   lightsCollision: function() {
     var lightLen = this.lights.length;
     for (var i = 0; i < lightLen; i++) {
@@ -201,20 +213,20 @@ var game = {
           case 0:
             this.aliens.push(new alien(57 + j * 65,
               this.level * 50 + i * 50, 40,
-              100 - i * 5, 1));
+              50 - i * 5, 1));
             break;
             //type 2
           case 1:
           case 2:
             this.aliens.push(new alien(50 + j * 65,
               this.level * 50 + i * 50, 55,
-              100 - i * 5, 2));
+              50 - i * 5, 2));
             break;
             //type 3
           default:
             this.aliens.push(new alien(50 + j * 65,
               this.level * 50 + i * 50, 55,
-              100 - i * 5, 3));
+              50 - i * 5, 3));
             break;
         }
       }
@@ -255,6 +267,9 @@ $(document).keydown(function(e) {
       break;
     case 32: // space
       game.ship.fire();
+      break;
+    case 13: // enter
+      game.start = true;
       break;
   }
 });
