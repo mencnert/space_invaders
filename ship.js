@@ -51,9 +51,11 @@ function ship(x, y) {
       this.bullet = null;
       game.lives--;
       game.gameOver = (game.lives == 0)
-      sleep(2000);
-      this.x = 375;
-      this.y = 520;
+      if (!game.gameOver) {
+        sleep(2000);
+        this.x = 375;
+        this.y = 520;
+      }
     }
   }
 }

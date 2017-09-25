@@ -57,9 +57,9 @@ function alien(x, y, w, wait, type) {
         break;
       case 3:
         if (this.sw) {
-          game.ctx.drawImage(game.alien31, this.x, this.y, 55,40);
+          game.ctx.drawImage(game.alien31, this.x, this.y, 55, 40);
         } else {
-          game.ctx.drawImage(game.alien32, this.x, this.y,55,40);
+          game.ctx.drawImage(game.alien32, this.x, this.y, 55, 40);
         }
         break;
     }
@@ -73,8 +73,19 @@ function alien(x, y, w, wait, type) {
 
   this.collisionBullet = function(rect, index) {
     if (this.rect.intersect(rect)) {
+      switch (this.type) {
+        case 1:
+          game.score += 30;
+          break;
+        case 2:
+          game.score += 20;
+          break;
+        case 3:
+          game.score += 10;
+          break;
+      }
       game.aliens.splice(index, 1);
-      game.ship.bullet = null;
+      //game.ship.bullet = null;
       alienWait--;
     }
   }
