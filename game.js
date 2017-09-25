@@ -63,7 +63,7 @@ var game = {
     if (!game.gameOver) {
       if (game.aliens.length == 0) {
         game.level = (game.level < 4) ? game.level + 1 : 4;
-        game.ship = new ship(375, 520);
+        game.ship = new ship(465, 520);
         game.loadShield();
         game.loadAlien();
       } else {
