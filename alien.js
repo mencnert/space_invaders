@@ -29,7 +29,7 @@ function alien(x, y, w, wait, type) {
         }); //end forEach
       }
       game.aliens.forEach(function(alien) {
-        maxY = (alien.x >= x - 10 && alien.x <= x + 10 && maxY < alien.y) ? alien.y : maxY;
+        maxY = (alien.x >= x - 20 && alien.x <= x + 20 && maxY < alien.y) ? alien.y : maxY;
       }); //end forEach
       if (Math.floor(Math.random() * 30) == 0 && maxY == this.y) {
         game.lights.push(new light(x + 20, maxY + 30));
@@ -40,9 +40,6 @@ function alien(x, y, w, wait, type) {
   }
 
   this.draw = function() {
-    /*game.ctx.fillStyle = "white";
-    game.ctx.fillRect(this.rect.x, this.rect.y,
-      this.rect.width, this.rect.height);*/
     switch (this.type) {
       case 1:
         if (this.sw) {
@@ -60,9 +57,9 @@ function alien(x, y, w, wait, type) {
         break;
       case 3:
         if (this.sw) {
-          game.ctx.drawImage(game.alien31, this.x, this.y);
+          game.ctx.drawImage(game.alien31, this.x, this.y, 55,40);
         } else {
-          game.ctx.drawImage(game.alien32, this.x, this.y);
+          game.ctx.drawImage(game.alien32, this.x, this.y,55,40);
         }
         break;
     }
