@@ -1,7 +1,7 @@
 function ufo() {
   this.x = 900;
   this.y = 50;
-  this.speed = 3;
+  this.speed = 4;
   this.rect = new rect(this.x, this.y, 80, 40);
   this.update = function() {
     this.x -= this.speed;

@@ -121,7 +121,7 @@ var game = {
     // alien end
     if (this.aliens.length != 0) {
       if (this.aliens[0].y >= 100 && this.ufo == null) {
-        if (Math.floor(Math.random() * 3000) == 0) {
+        if (Math.floor(Math.random() * 5000) == 0) {
           this.ufo = new ufo();
         }
       }
@@ -176,7 +176,7 @@ var game = {
     //text
     this.ctx.font = "25px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText("Lives: " + this.lives, 550, 40);
+    this.ctx.fillText("Lives: " + this.lives, 620, 40);
     this.ctx.fillText("Score: " + this.score, 40, 40);
     if (this.gameOver) {
       this.ctx.font = "150px Arial";
